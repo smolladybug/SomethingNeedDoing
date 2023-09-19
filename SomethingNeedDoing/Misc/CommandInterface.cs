@@ -8,6 +8,7 @@ using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using Lumina.Excel.GeneratedSheets;
 using SomethingNeedDoing.Exceptions;
 
 namespace SomethingNeedDoing.Misc;
@@ -432,6 +433,14 @@ public class CommandInterface : ICommandInterface
         else
             throw new ArgumentException("Invalid flag name", nameof(flagName));
     }
+
+    /// <inheritdoc/>
+    public bool IsInZone(int zoneID) =>
+        Service.ClientState.TerritoryType == zoneID;
+
+    /// <inheritdoc/>
+    public int GetZoneID() =>
+        Service.ClientState.TerritoryType;
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
