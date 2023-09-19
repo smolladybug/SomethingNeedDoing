@@ -184,4 +184,12 @@ public interface ICommandInterface
     /// <param name="index">Item number, 0 indexed.</param>
     /// <returns>The item text, or an empty string.</returns>
     public string GetSelectIconStringText(int index);
+
+    /// <summary>
+    /// Get the status of a given character condition
+    /// </summary>
+    /// <param name="flagName">Flag Name.</param>
+    /// <param name="hasCondition">Bool flag to invert the condition check.</param>
+    /// <returns>Returns true if the player has the condition, false otherwise. Condition inverted if provided with hasCondition=false.</returns>
+    bool GetCharacterCondition(string flagName, bool hasCondition = true);
 }

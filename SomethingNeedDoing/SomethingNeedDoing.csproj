@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Authors>daemitus</Authors>
+    <Authors>daemitus, croizat</Authors>
     <Company>-</Company>
     <Version>1.4.1.0</Version>
     <Description></Description>
@@ -32,8 +32,13 @@
     <Content Include="..\res\icon.png" Link="images\icon.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
   </ItemGroup>
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+	  <OutputPath>$(DalamudDevPlugins)</OutputPath>
+  </PropertyGroup>
+
   <PropertyGroup>
     <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+	<DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\$(PluginName)\</DalamudDevPlugins>
   </PropertyGroup>
 
   <PropertyGroup>

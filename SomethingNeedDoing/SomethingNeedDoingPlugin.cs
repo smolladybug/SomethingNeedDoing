@@ -53,7 +53,7 @@ namespace SomethingNeedDoing
         }
 
         /// <inheritdoc/>
-        public string Name => "Something Need Doing";
+        public string Name => "Something Need Doing (Expanded Edition)";
 
         /// <inheritdoc/>
         public void Dispose()
