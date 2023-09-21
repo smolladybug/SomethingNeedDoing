@@ -72,10 +72,11 @@ internal partial class MacroManager : IDisposable
         this.State = LoopState.Waiting;
     }
 
+    // Disabling this enables multi mode or something
     private void OnLogout(object? sender, EventArgs e)
     {
-        this.loggedInWaiter.Reset();
-        this.State = LoopState.NotLoggedIn;
+        // this.loggedInWaiter.Reset();
+        // this.State = LoopState.NotLoggedIn;
     }
 
     private async void EventLoop()
