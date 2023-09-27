@@ -10,6 +10,7 @@ using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using Lumina.Excel.GeneratedSheets;
 using SomethingNeedDoing.Exceptions;
+using SomethingNeedDoing.Interface;
 
 namespace SomethingNeedDoing.Misc;
 
@@ -441,6 +442,8 @@ public class CommandInterface : ICommandInterface
     /// <inheritdoc/>
     public int GetZoneID() =>
         Service.ClientState.TerritoryType;
+
+    public static string GetCharacterName() => Service.ClientState.LocalPlayer.Name.ToString();
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
