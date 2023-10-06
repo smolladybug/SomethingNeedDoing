@@ -205,4 +205,10 @@ public interface ICommandInterface
     /// </summary>
     /// <returns>Returns the current zone's ID, int.</returns>
     public int GetZoneID();
+
+    /// <summary>
+    /// Gets the character's name.
+    /// </summary>
+    /// <returns>Returns the current's name, string.</returns>
+    public string GetCharacterName();
 }

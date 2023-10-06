@@ -443,7 +443,8 @@ public class CommandInterface : ICommandInterface
     public int GetZoneID() =>
         Service.ClientState.TerritoryType;
 
-    public static string GetCharacterName() => Service.ClientState.LocalPlayer.Name.ToString();
+    /// <inheritdoc/>
+    public string GetCharacterName() => Service.ClientState.LocalPlayer.Name.ToString();
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
