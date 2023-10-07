@@ -7,6 +7,7 @@ using Dalamud.Game.ClientState.Objects;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.IoC;
+using Dalamud.Logging;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using SomethingNeedDoing.Managers;
@@ -119,6 +120,6 @@ namespace SomethingNeedDoing
         /// Gets the Dalamud plugin log.
         /// </summary>
         [PluginService]
-        internal static IService.Log Log { get; private set; } = null!;
+        internal static IPluginLog Log { get; private set; } = null!;
     }
 }
