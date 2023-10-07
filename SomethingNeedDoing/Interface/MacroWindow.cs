@@ -330,7 +330,7 @@ internal class MacroWindow : Window
             {
                 text = string.Empty;
                 Service.ChatManager.PrintError($"[SND] Could not import from clipboard.");
-                PluginLog.Error(ex, "Clipboard import error");
+                Service.Log.Error(ex, "Clipboard import error");
             }
 
             // Replace \r with \r\n, usually from copy/pasting from the in-game macro window
@@ -542,7 +542,7 @@ internal class MacroWindow : Window
         catch (Exception ex)
         {
             Service.ChatManager.PrintError($"Unexpected error");
-            PluginLog.Error(ex, "Unexpected error");
+            Service.Log.Error(ex, "Unexpected error");
         }
     }
 

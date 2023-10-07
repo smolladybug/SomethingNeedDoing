@@ -114,5 +114,11 @@ namespace SomethingNeedDoing
         /// </summary>
         [PluginService]
         internal static IGameInteropProvider Hook { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets the Dalamud plugin log.
+        /// </summary>
+        [PluginService]
+        internal static IService.Log Log { get; private set; } = null!;
     }
 }
