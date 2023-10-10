@@ -446,6 +446,9 @@ public class CommandInterface : ICommandInterface
     /// <inheritdoc/>
     public string GetCharacterName() => Service.ClientState.LocalPlayer.Name.ToString();
 
+    /// <inheritdoc/>
+    public unsafe int GetItemCount(int itemID) => InventoryManager.Instance()->GetInventoryItemCount((uint)itemID);
+
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
         try

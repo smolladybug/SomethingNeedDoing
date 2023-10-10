@@ -211,4 +211,11 @@ public interface ICommandInterface
     /// </summary>
     /// <returns>Returns the current's name, string.</returns>
     public string GetCharacterName();
+
+    /// <summary>
+    /// Gets an item count from your inventory.
+    /// </summary>
+    /// <param name="itemID">Item ID.</param>
+    /// <returns>Returns the count of a given item in your inventory, int.</returns>
+    public int GetItemCount(int itemID);
 }

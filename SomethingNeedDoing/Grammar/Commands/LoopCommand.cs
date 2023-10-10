@@ -102,6 +102,7 @@ internal class LoopCommand : MacroCommand
         macro.Loop();
         Service.MacroManager.LoopCheckForPause();
         Service.MacroManager.LoopCheckForStop();
+        await Task.Delay(10, token);
         await this.PerformWait(token);
     }
 }
