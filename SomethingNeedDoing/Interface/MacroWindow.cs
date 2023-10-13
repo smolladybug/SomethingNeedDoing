@@ -38,6 +38,11 @@ internal class MacroWindow : Window
 
     private static FolderNode RootFolder => Service.Configuration.RootFolder;
 
+    public override void Update()
+    {
+        this.Flags = Service.Configuration.LockWindow ? ImGuiWindowFlags.NoMove : 0;
+    }
+
     /// <inheritdoc/>
     public override void PreDraw()
     {
@@ -53,6 +58,7 @@ internal class MacroWindow : Window
     /// <inheritdoc/>
     public override void Draw()
     {
+        ImGuiUtils.TitleBarLockButton(() => { Service.Configuration.LockWindow ^= true; }, 2, UiBuilder.IconFont);
         ImGui.Columns(2);
         this.DisplayNodeTree();
 

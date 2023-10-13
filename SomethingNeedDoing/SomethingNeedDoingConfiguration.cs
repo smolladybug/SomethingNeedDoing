@@ -19,6 +19,11 @@ public class SomethingNeedDoingConfiguration : IPluginConfiguration
     public int Version { get; set; } = 1;
 
     /// <summary>
+    /// Gets or sets the window's position lock.
+    /// </summary>
+    public bool LockWindow { get; set; } = false;
+
+    /// <summary>
     /// Gets the root folder.
     /// </summary>
     public FolderNode RootFolder { get; private set; } = new FolderNode { Name = "/" };
