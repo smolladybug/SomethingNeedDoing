@@ -218,4 +218,10 @@ public interface ICommandInterface
     /// <param name="itemID">Item ID.</param>
     /// <returns>Returns the count of a given item in your inventory, int.</returns>
     public int GetItemCount(int itemID);
+
+    /// <summary>
+    /// Sends an IPC request to Deliveroo to check if the turn in function is running.
+    /// </summary>
+    /// <returns>Returns value of turn in function running, bool.</returns>
+    public bool DeliverooIsTurnInRunning();
 }

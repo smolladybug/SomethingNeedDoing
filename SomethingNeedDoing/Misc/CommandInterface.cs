@@ -6,11 +6,13 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Logging;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
+using FFXIVClientStructs.FFXIV.Client.Graphics.Kernel;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using Lumina.Excel.GeneratedSheets;
 using SomethingNeedDoing.Exceptions;
 using SomethingNeedDoing.Interface;
+using SomethingNeedDoing.IPC;
 
 namespace SomethingNeedDoing.Misc;
 
@@ -448,6 +450,13 @@ public class CommandInterface : ICommandInterface
 
     /// <inheritdoc/>
     public unsafe int GetItemCount(int itemID) => InventoryManager.Instance()->GetInventoryItemCount((uint)itemID);
+
+    /// <inheritdoc/>
+    public unsafe bool DeliverooIsTurnInRunning()
+    {
+        DeliverooIPC.Init();
+        return DeliverooIPC.IsTurnInRunning.InvokeFunc();
+    }
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
