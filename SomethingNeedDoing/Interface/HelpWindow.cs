@@ -298,6 +298,7 @@ internal class HelpWindow : Window
 
         DisplayChangelog(
             "2023-10-13",
+            "- Added a small delay to /loop so that very short looping macros will not crash the client.\n" +
             "- Added a lock icon to the window bar to the lock the window position.\n");
 
         DisplayChangelog(
