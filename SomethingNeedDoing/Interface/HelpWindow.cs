@@ -293,6 +293,21 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+            "2023-10-17",
+            "- Added a Deliveroo IPC along with the DeliverooIsTurnInRunning() lua command.\n");
+
+        DisplayChangelog(
+            "2023-10-13",
+            "- Added a lock icon to the window bar to the lock the window position.\n");
+
+        DisplayChangelog(
+            "2023-10-10",
+            "- Added IsInZone() lua command. Pass the zoneID, returns a bool.\n" +
+            "- Added GetZoneID() lua command. Gets the zoneID of the current zone.\n" +
+            "- Added GetCharacterName() lua command.\n" +
+            "- Added GetItemCount() lua command. Pass the itemID, get count.\n");
+
+        DisplayChangelog(
             "2023-05-31",
             "- Added the index modifier\n");
 
