@@ -446,10 +446,12 @@ public class CommandInterface : ICommandInterface
         Service.ClientState.TerritoryType;
 
     /// <inheritdoc/>
-    public string GetCharacterName() => Service.ClientState.LocalPlayer.Name.ToString();
+    public string GetCharacterName() => Service.ClientState.LocalPlayer == null ? "null" : Service.ClientState.LocalPlayer.Name.ToString();
 
     /// <inheritdoc/>
-    public unsafe int GetItemCount(int itemID) => InventoryManager.Instance()->GetInventoryItemCount((uint)itemID);
+    public unsafe int GetItemCount(int itemID, bool includeHQ = true) =>
+        includeHQ ? InventoryManager.Instance()->GetInventoryItemCount((uint)itemID, true) + InventoryManager.Instance()->GetInventoryItemCount((uint)itemID)
+        : InventoryManager.Instance()->GetInventoryItemCount((uint)itemID);
 
     /// <inheritdoc/>
     public unsafe bool DeliverooIsTurnInRunning()

@@ -293,6 +293,10 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+           "2023-10-17",
+           "- Changed GetItemCount() to support HQ items. Default behaviour includes both HQ and NQ. Pass false to the function to do only NQ.\n");
+
+        DisplayChangelog(
             "2023-10-17",
             "- Added a Deliveroo IPC along with the DeliverooIsTurnInRunning() lua command.\n");
 

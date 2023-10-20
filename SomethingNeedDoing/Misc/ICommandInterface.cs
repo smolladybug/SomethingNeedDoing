@@ -216,8 +216,9 @@ public interface ICommandInterface
     /// Gets an item count from your inventory.
     /// </summary>
     /// <param name="itemID">Item ID.</param>
+    /// <param name="includeHQ">Include HQ in count.</param>
     /// <returns>Returns the count of a given item in your inventory, int.</returns>
-    public int GetItemCount(int itemID);
+    public int GetItemCount(int itemID, bool includeHQ = true);
 
     /// <summary>
     /// Sends an IPC request to Deliveroo to check if the turn in function is running.
