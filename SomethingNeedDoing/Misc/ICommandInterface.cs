@@ -209,8 +209,9 @@ public interface ICommandInterface
     /// <summary>
     /// Gets the character's name.
     /// </summary>
+    /// <param name="includeWorld">Bool to include the world in the string.</param>
     /// <returns>Returns the current's name, string.</returns>
-    public string GetCharacterName();
+    public string GetCharacterName(bool includeWorld = false);
 
     /// <summary>
     /// Gets an item count from your inventory.

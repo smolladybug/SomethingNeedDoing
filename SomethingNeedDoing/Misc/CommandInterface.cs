@@ -446,7 +446,10 @@ public class CommandInterface : ICommandInterface
         Service.ClientState.TerritoryType;
 
     /// <inheritdoc/>
-    public string GetCharacterName() => Service.ClientState.LocalPlayer == null ? "null" : Service.ClientState.LocalPlayer.Name.ToString();
+    public string GetCharacterName(bool includeWorld = false) =>
+        Service.ClientState.LocalPlayer == null ? "null"
+        : includeWorld ? $"{Service.ClientState.LocalPlayer.Name}@{Service.ClientState.LocalPlayer.HomeWorld.GameData.Name}"
+        : Service.ClientState.LocalPlayer.Name.ToString();
 
     /// <inheritdoc/>
     public unsafe int GetItemCount(int itemID, bool includeHQ = true) =>

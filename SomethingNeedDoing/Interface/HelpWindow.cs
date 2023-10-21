@@ -293,7 +293,11 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
-           "2023-10-17",
+           "2023-10-21",
+           "- Added an optional bool to pass to GetCharacterName to return the world name in addition.\n");
+
+        DisplayChangelog(
+           "2023-10-20",
            "- Changed GetItemCount() to support HQ items. Default behaviour includes both HQ and NQ. Pass false to the function to do only NQ.\n");
 
         DisplayChangelog(
