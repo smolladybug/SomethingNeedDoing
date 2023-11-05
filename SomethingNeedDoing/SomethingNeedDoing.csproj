@@ -12,57 +12,63 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0-windows</TargetFramework>
 		<Platforms>x64</Platforms>
+		<Nullable>enable</Nullable>
 		<LangVersion>preview</LangVersion>
-		<PluginName>SomethingNeedDoing</PluginName>
-		<DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\$(PluginName)\</DalamudDevPlugins>
-		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-		<DalamudPluginPath>$(appdata)\XIVLauncher\installedPlugins\$(PluginName)\$(version)</DalamudPluginPath>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<ProduceReferenceAssembly>false</ProduceReferenceAssembly>
-		<AssemblyName>$(PluginName)</AssemblyName>
-		<PackageId>$(PluginName)</PackageId>
-		<Product>$(PluginName)</Product>
-		<RootNamespace>$(PluginName)</RootNamespace>
-		<Nullable>disable</Nullable>
-		<NoWarn>CS1591</NoWarn>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
 	</PropertyGroup>
 
-    <PropertyGroup Label="Documentation">
-        <DocumentationFile></DocumentationFile>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    </PropertyGroup>
+	<PropertyGroup>
+		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+		<DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\$(PluginName)\</DalamudDevPlugins>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
+		<DalamudLibPath>$(DALAMUD_HOME)/</DalamudLibPath>
+	</PropertyGroup>
 
     <ItemGroup>
         <Content Include="..\res\icon.png" Link="images\icon.png" CopyToOutputDirectory="PreserveNewest" Visible="false" />
     </ItemGroup>
-
-    <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-	    <OutputPath>bin/Release</OutputPath>
-    </PropertyGroup>
-
+	
     <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
 	    <OutputPath>$(DalamudDevPlugins)</OutputPath>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
-        <DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\$(PluginName)\</DalamudDevPlugins>
-    </PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="DalamudPackager" Version="2.1.10" />
+		<PackageReference Include="NLua" Version="1.6.0" />
+		<ProjectReference Include="..\lib\ClickLib\ClickLib\ClickLib.csproj" />
+		<Reference Include="Newtonsoft.Json">
+			<HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Dalamud">
+			<HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Dalamud.Common">
+			<HintPath>$(DalamudLibPath)Dalamud.Common.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="ImGui.NET">
+			<HintPath>$(DalamudLibPath)ImGui.NET.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Lumina">
+			<HintPath>$(DalamudLibPath)Lumina.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="Lumina.Excel">
+			<HintPath>$(DalamudLibPath)Lumina.Excel.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+	</ItemGroup>
 
-    <PropertyGroup>
-        <AssemblySearchPaths>
-            $(AssemblySearchPaths);
-            $(DalamudLibPath);
-        </AssemblySearchPaths>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <AdditionalFiles Include="..\stylecop.json" />
-    </ItemGroup>
-
-    <ItemGroup>
+    <!--<ItemGroup>
         <PackageReference Include="DalamudPackager" Version="2.1.10" />
         <PackageReference Include="NLua" Version="1.6.0" />
         <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
@@ -76,13 +82,5 @@
         <Reference Include="Lumina.Excel" Private="False" />
         <Reference Include="Newtonsoft.Json" Private="False" />
         <ProjectReference Include="..\lib\ClickLib\ClickLib\ClickLib.csproj" />
-    </ItemGroup>
-
-	<PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
-		<DalamudLibPath>$(DALAMUD_HOME)/</DalamudLibPath>
-	</PropertyGroup>
-
-	<Target Name="PostBuild" AfterTargets="DefaultDalamudPackagerRelease" Condition="'$(Configuration)' == 'Release'">
-		<Exec Command="robocopy $(TargetDir)$(ProjectName) ..\PluginDistribution\plugins\$(ProjectName) /mir" IgnoreExitCode="true"></Exec>
-	</Target>
+    </ItemGroup>-->
 </Project>
