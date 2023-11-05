@@ -121,5 +121,11 @@ namespace SomethingNeedDoing
         /// </summary>
         [PluginService]
         internal static IPluginLog Log { get; private set; } = null!;
+
+        /// <summary>
+        /// Gets the Dalamud signature scanner.
+        /// </summary>
+        [PluginService]
+        internal static ISigScanner SigScanner { get; private set; } = null!;
     }
 }

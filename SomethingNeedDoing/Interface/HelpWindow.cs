@@ -2,12 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
-
+using System.Xml.Linq;
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Keys;
 using Dalamud.Game.Text;
 using Dalamud.Interface;
 using Dalamud.Interface.Colors;
+using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 
@@ -255,6 +258,7 @@ internal class HelpWindow : Window
                 ("CLI", this.DrawCli),
                 ("Clicks", this.DrawClicks),
                 ("Sends", this.DrawVirtualKeys),
+                ("Conditions", this.DrawAllConditions),
             };
 
             foreach (var (title, dele) in tabs)
@@ -291,6 +295,20 @@ internal class HelpWindow : Window
         }
 
         ImGui.PushFont(UiBuilder.MonoFont);
+
+        DisplayChangelog(
+           "2023-11-05",
+           "- Added LeaveDuty().\n");
+
+        DisplayChangelog(
+           "2023-11-04",
+           "- Added GetProgressIncrease(uint actionID). Returns numerical amount of progress increase a given action will cause.\n" +
+           "- Added GetQualityIncrease(uint actionID). Returns numerical amount of quality increase a given action will cause.\n");
+
+        DisplayChangelog(
+           "2023-10-24",
+           "- Changed GetCharacterCondition() to take in an int instead of a string.\n" +
+           "- Added a list of conditions to the help menu.\n");
 
         DisplayChangelog(
            "2023-10-21",
@@ -846,5 +864,25 @@ GetNodeText(string addonName, int nodeNumber, ...)
         }
 
         ImGui.PopFont();
+    }
+
+    private void DrawAllConditions()
+    {
+        using var font = ImRaii.PushFont(UiBuilder.MonoFont);
+
+        ImGui.TextWrapped("Active conditions will highlight green.");
+        ImGui.Separator();
+
+        foreach (ConditionFlag flag in Enum.GetValues(typeof(ConditionFlag)))
+        {
+            var isActive = Service.Condition[flag];
+            if (isActive)
+                ImGui.PushStyleColor(ImGuiCol.Text, ImGuiColors.HealerGreen);
+
+            ImGui.Text($"ID: {(int)flag} Enum: {flag}");
+
+            if (isActive)
+                ImGui.PopStyleColor();
+        }
     }
 }

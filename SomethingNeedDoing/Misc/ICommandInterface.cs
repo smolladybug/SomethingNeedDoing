@@ -188,10 +188,10 @@ public interface ICommandInterface
     /// <summary>
     /// Get the status of a given character condition.
     /// </summary>
-    /// <param name="flagName">Flag Name.</param>
+    /// <param name="flagID">Flag ID.</param>
     /// <param name="hasCondition">Bool flag to invert the condition check.</param>
     /// <returns>Returns true if the player has the condition, false otherwise. Condition inverted if provided with hasCondition=false.</returns>
-    public bool GetCharacterCondition(string flagName, bool hasCondition = true);
+    public bool GetCharacterCondition(int flagID, bool hasCondition = true);
 
     /// <summary>
     /// Get the status of the player being in a given zone.
@@ -226,4 +226,23 @@ public interface ICommandInterface
     /// </summary>
     /// <returns>Returns value of turn in function running, bool.</returns>
     public bool DeliverooIsTurnInRunning();
+
+    /// <summary>
+    /// Get the amount of progress a crafting action will give.
+    /// </summary>
+    /// <param name="actionID">Action ID.</param>
+    /// <returns>Returns amount of increase in progress a given action will make in a craft, uint.</returns>
+    public uint GetProgressIncrease(uint actionID);
+
+    /// <summary>
+    /// Get the amount of quality a crafting action will give.
+    /// </summary>
+    /// <param name="actionID">Action ID.</param>
+    /// <returns>Returns amount of increase in quality a given action will make in a craft, uint.</returns>
+    public uint GetQualityIncrease(uint actionID);
+
+    /// <summary>
+    /// Leaves an instance.
+    /// </summary>
+    public void LeaveDuty();
 }

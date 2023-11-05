@@ -8,6 +8,7 @@ using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.Graphics.Kernel;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using FFXIVClientStructs.FFXIV.Component.GUI;
 using Lumina.Excel.GeneratedSheets;
 using SomethingNeedDoing.Exceptions;
@@ -21,6 +22,10 @@ namespace SomethingNeedDoing.Misc;
 /// </summary>
 public class CommandInterface : ICommandInterface
 {
+    private readonly AbandonDuty abandonDuty = Marshal.GetDelegateForFunctionPointer<AbandonDuty>(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 43 28 B1 01"));
+
+    private delegate void AbandonDuty(bool a1);
+
     /// <summary>
     /// Gets the static instance.
     /// </summary>
@@ -429,12 +434,9 @@ public class CommandInterface : ICommandInterface
     }
 
     /// <inheritdoc/>
-    public bool GetCharacterCondition(string flagName, bool hasCondition = true)
+    public bool GetCharacterCondition(int flagID, bool hasCondition = true)
     {
-        if (Enum.TryParse(typeof(ConditionFlag), flagName, ignoreCase: true, out var enumValue))
-            return hasCondition ? Service.Condition[(ConditionFlag)enumValue] : !Service.Condition[(ConditionFlag)enumValue];
-        else
-            throw new ArgumentException("Invalid flag name", nameof(flagName));
+        return hasCondition ? Service.Condition[flagID] : !Service.Condition[flagID];
     }
 
     /// <inheritdoc/>
@@ -461,6 +463,54 @@ public class CommandInterface : ICommandInterface
     {
         DeliverooIPC.Init();
         return DeliverooIPC.IsTurnInRunning.InvokeFunc();
+    }
+
+    /// <inheritdoc/>
+    public unsafe uint GetProgressIncrease(uint actionID) => this.GetActionResult(actionID).Progress;
+
+    /// <inheritdoc/>
+    public unsafe uint GetQualityIncrease(uint actionID) => this.GetActionResult(actionID).Quality;
+
+    /// <inheritdoc/>
+    public void LeaveDuty() => this.abandonDuty(false);
+
+    private unsafe (uint Progress, uint Quality) GetActionResult(uint id)
+    {
+
+        var agent = AgentCraftActionSimulator.Instance();
+        if (agent == null) return (0, 0);
+
+        var progress = 0U;
+        var quality = 0U;
+
+        // Find Progress
+        var p = (ProgressEfficiencyCalculation*)agent->Progress;
+        for (var i = 0; i < sizeof(ProgressEfficiencyCalculations) / sizeof(ProgressEfficiencyCalculation); i++)
+        {
+            if (p == null) break;
+            if (p->ActionId == id)
+            {
+                progress = p->ProgressIncrease;
+                break;
+            }
+
+            p++;
+        }
+
+        var q = (QualityEfficiencyCalculation*)agent->Quality;
+        for (var i = 0; i < sizeof(QualityEfficiencyCalculations) / sizeof(QualityEfficiencyCalculation); i++)
+        {
+            if (q == null) break;
+            if (q->ActionId == id)
+            {
+                quality = q->QualityIncrease;
+                break;
+            }
+
+            q++;
+        }
+
+        return (progress, quality);
     }
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
