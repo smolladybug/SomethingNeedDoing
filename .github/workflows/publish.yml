@@ -39,7 +39,7 @@ jobs:
         uses: PunishXIV/dynamis-action@v1
         id: dynamis
         with:
-          plugin_id: 28
+          plugin_id: 25
           internal_name: 'SomethingNeedDoing'
           version_number: ${{ env.tag }}
           path: 'SomethingNeedDoing/bin/Release/SomethingNeedDoing/latest.zip'
