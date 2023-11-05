@@ -54,6 +54,10 @@
 			<HintPath>$(DalamudLibPath)Dalamud.Common.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
+		<Reference Include="FFXIVClientStructs">
+			<HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
 		<Reference Include="ImGui.NET">
 			<HintPath>$(DalamudLibPath)ImGui.NET.dll</HintPath>
 			<Private>false</Private>
