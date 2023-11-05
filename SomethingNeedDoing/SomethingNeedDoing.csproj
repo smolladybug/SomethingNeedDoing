@@ -77,4 +77,12 @@
         <Reference Include="Newtonsoft.Json" Private="False" />
         <ProjectReference Include="..\lib\ClickLib\ClickLib\ClickLib.csproj" />
     </ItemGroup>
+
+	<PropertyGroup Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))'">
+		<DalamudLibPath>$(DALAMUD_HOME)/</DalamudLibPath>
+	</PropertyGroup>
+
+	<Target Name="PostBuild" AfterTargets="DefaultDalamudPackagerRelease" Condition="'$(Configuration)' == 'Release'">
+		<Exec Command="robocopy $(TargetDir)$(ProjectName) ..\PluginDistribution\plugins\$(ProjectName) /mir" IgnoreExitCode="true"></Exec>
+	</Target>
 </Project>
