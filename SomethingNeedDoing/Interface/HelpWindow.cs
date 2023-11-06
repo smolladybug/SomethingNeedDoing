@@ -297,6 +297,12 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+           "2023-11-06",
+           "- Added IsLocalPlayerNull()\n" +
+           "- Added IsPlayerDead()\n" +
+           "- Added IsPlayerCasting()\n");
+
+        DisplayChangelog(
            "2023-11-05",
            "- Added LeaveDuty().\n");
 

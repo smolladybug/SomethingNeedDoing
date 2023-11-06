@@ -471,9 +471,6 @@ public class CommandInterface : ICommandInterface
     /// <inheritdoc/>
     public unsafe uint GetQualityIncrease(uint actionID) => this.GetActionResult(actionID).Quality;
 
-    /// <inheritdoc/>
-    public void LeaveDuty() => this.abandonDuty(false);
-
     private unsafe (uint Progress, uint Quality) GetActionResult(uint id)
     {
 
@@ -512,6 +509,15 @@ public class CommandInterface : ICommandInterface
 
         return (progress, quality);
     }
+
+    /// <inheritdoc/>
+    public void LeaveDuty() => this.abandonDuty(false);
+
+    public bool IsLocalPlayerNull() => Service.ClientState.LocalPlayer == null;
+
+    public bool IsPlayerDead() => Service.ClientState.LocalPlayer!.IsDead;
+
+    public bool IsPlayerCasting() => Service.ClientState.LocalPlayer!.IsCasting;
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
