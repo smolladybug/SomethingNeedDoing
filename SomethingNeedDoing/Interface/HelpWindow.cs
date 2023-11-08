@@ -297,6 +297,10 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+           "2023-11-08",
+           "- Added GetGil()\n");
+
+        DisplayChangelog(
            "2023-11-06",
            "- Added IsLocalPlayerNull()\n" +
            "- Added IsPlayerDead()\n" +

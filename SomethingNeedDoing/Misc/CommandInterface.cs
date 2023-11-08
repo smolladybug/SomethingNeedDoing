@@ -519,6 +519,8 @@ public class CommandInterface : ICommandInterface
 
     public bool IsPlayerCasting() => Service.ClientState.LocalPlayer!.IsCasting;
 
+    public unsafe uint GetGil() => InventoryManager.Instance()->GetGil();
+
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
         try
