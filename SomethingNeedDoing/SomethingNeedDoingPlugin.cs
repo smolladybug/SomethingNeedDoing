@@ -4,6 +4,7 @@ using ClickLib;
 using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
+using ECommons;
 using SomethingNeedDoing.Interface;
 using SomethingNeedDoing.Managers;
 
@@ -32,6 +33,8 @@ namespace SomethingNeedDoing
 
             Service.Plugin = this;
             Service.Configuration = SomethingNeedDoingConfiguration.Load(pluginInterface.ConfigDirectory);
+
+            ECommonsMain.Init(pluginInterface, this);
 
             Service.ChatManager = new ChatManager();
             Service.GameEventManager = new GameEventManager();

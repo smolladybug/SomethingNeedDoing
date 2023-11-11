@@ -38,6 +38,9 @@
           "ILRepack": "[2.0.18, )",
           "Reloaded.Memory": "[7.1.0, )"
         }
+      },
+      "ecommons": {
+        "type": "Project"
       }
     },
     "net7.0-windows7.0/win-x64": {
