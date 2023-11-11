@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 using ClickLib;
@@ -5,6 +6,7 @@ using Dalamud.Game.Command;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using ECommons;
+using ECommons.DalamudServices;
 using SomethingNeedDoing.Interface;
 using SomethingNeedDoing.Managers;
 
@@ -15,7 +17,9 @@ namespace SomethingNeedDoing
     /// </summary>
     public sealed class SomethingNeedDoingPlugin : IDalamudPlugin
     {
-        private const string Command = "/pcraft";
+        private const string Command = "/somethingneeddoing";
+        private static string[] Aliases => new string[] { "/pcraft", "/snd" };
+        private readonly List<string> registeredCommands = new();
 
         private readonly WindowSystem windowSystem;
         private readonly MacroWindow macroWindow;
@@ -53,6 +57,19 @@ namespace SomethingNeedDoing
                 HelpMessage = "Open a window to edit various settings.",
                 ShowInHelp = true,
             });
+            registeredCommands.Add(Command);
+            foreach (var a in Aliases)
+            {
+                if (!Service.CommandManager.Commands.ContainsKey(a))
+                {
+                    Service.CommandManager.AddHandler(a, new CommandInfo(OnChatCommand)
+                    {
+                        HelpMessage = $"{Command} Alias",
+                        ShowInHelp = true
+                    });
+                    registeredCommands.Add(a);
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -61,7 +78,11 @@ namespace SomethingNeedDoing
         /// <inheritdoc/>
         public void Dispose()
         {
-            Service.CommandManager.RemoveHandler(Command);
+            foreach (var c in registeredCommands)
+            {
+                Service.CommandManager.RemoveHandler(c);
+            }
+            registeredCommands.Clear();
             Service.Interface.UiBuilder.OpenConfigUi -= this.OnOpenConfigUi;
             Service.Interface.UiBuilder.Draw -= this.windowSystem.Draw;
 
