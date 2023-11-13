@@ -297,6 +297,11 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+           "2023-11-11",
+           "- The main command is now /somethingneeddoing. The aliases are /snd and /pcraft.\n" +
+           "- Changed how the /send command works internally for compatibility with XIVAlexander.\n");
+
+        DisplayChangelog(
            "2023-11-08",
            "- Added GetGil()\n");
 
