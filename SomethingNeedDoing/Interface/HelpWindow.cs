@@ -297,6 +297,13 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+           "2023-11-14",
+           "- Fixed the targeting system to ignore untargetable objects.\n" +
+           "- Fixed the targeting system to prefer closest matches.\n" +
+           "- Added an option to not use SND's targeting system.\n" +
+           "- Added an option to not stop the macro if a target is not found.\n");
+
+        DisplayChangelog(
            "2023-11-11",
            "- The main command is now /somethingneeddoing. The aliases are /snd and /pcraft.\n" +
            "- Changed how the /send command works internally for compatibility with XIVAlexander.\n");
@@ -677,6 +684,25 @@ internal class HelpWindow : Window
                         Console.Beep(beepFrequency, beepDuration);
                 });
             }
+        }
+
+        if (ImGui.CollapsingHeader("/target"))
+        {
+            var defaultTarget = Service.Configuration.UseSNDTargeting;
+            if (ImGui.Checkbox("Use SND's targeting system.", ref defaultTarget))
+            {
+                Service.Configuration.UseSNDTargeting = defaultTarget;
+                Service.Configuration.Save();
+            }
+
+            var stopMacroIfNoTarget = Service.Configuration.StopMacroIfTargetNotFound;
+            if (ImGui.Checkbox("Stop macro if target not found (only applies to SND's targeting system).", ref stopMacroIfNoTarget))
+            {
+                Service.Configuration.StopMacroIfTargetNotFound = stopMacroIfNoTarget;
+                Service.Configuration.Save();
+            }
+
+            DisplayOption("- Override the behaviour of /target with SND's system.");
         }
 
         ImGui.PopFont();

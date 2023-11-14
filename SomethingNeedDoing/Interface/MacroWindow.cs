@@ -58,7 +58,7 @@ internal class MacroWindow : Window
     /// <inheritdoc/>
     public override void Draw()
     {
-        ImGuiUtils.TitleBarLockButton(() => { Service.Configuration.LockWindow ^= true; }, 2, UiBuilder.IconFont);
+        ImGuiUtils.TitleBarLockButton(() => { Service.Configuration.LockWindow ^= true; }, 3, UiBuilder.IconFont);
         ImGui.Columns(2);
         this.DisplayNodeTree();
 

@@ -2,6 +2,7 @@ using SomethingNeedDoing.Exceptions;
 using SomethingNeedDoing.Grammar.Modifiers;
 using SomethingNeedDoing.Misc;
 using System.Linq;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -53,14 +54,15 @@ internal class TargetCommand : MacroCommand
     public override async Task Execute(ActiveMacro macro, CancellationToken token)
     {
         Service.Log.Debug($"Executing: {this.targetIndex}");
+        var target = Service.ObjectTable
+            .OrderBy(o => Vector3.Distance(o.Position, Service.ClientState.LocalPlayer!.Position))
+            .FirstOrDefault(obj => obj.Name.TextValue.ToLowerInvariant() == this.targetName && obj.IsTargetable && (this.targetIndex <= 0 || obj.ObjectIndex == this.targetIndex));
 
-        var target = Service.ObjectTable.FirstOrDefault(obj => obj.Name.TextValue.ToLowerInvariant() == this.targetName &&
-                                                               (this.targetIndex <= 0 || obj.ObjectIndex == this.targetIndex));
-
-        if (target == default)
+        if (target == default && Service.Configuration.StopMacroIfTargetNotFound)
             throw new MacroCommandError("Could not find target");
 
-        Service.TargetManager.Target = target;
+        if (target != default)
+            Service.TargetManager.Target = target;
 
         await this.PerformWait(token);
     }
