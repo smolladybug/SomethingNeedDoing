@@ -297,6 +297,10 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+           "2023-11-15",
+           "- Added GetClassJobId()\n");
+
+        DisplayChangelog(
            "2023-11-14",
            "- Fixed the targeting system to ignore untargetable objects.\n" +
            "- Fixed the targeting system to prefer closest matches.\n" +

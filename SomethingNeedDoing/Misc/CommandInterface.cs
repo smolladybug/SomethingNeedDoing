@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Logging;
+using ECommons.DalamudServices;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.Graphics.Kernel;
@@ -450,7 +451,7 @@ public class CommandInterface : ICommandInterface
     /// <inheritdoc/>
     public string GetCharacterName(bool includeWorld = false) =>
         Service.ClientState.LocalPlayer == null ? "null"
-        : includeWorld ? $"{Service.ClientState.LocalPlayer.Name}@{Service.ClientState.LocalPlayer.HomeWorld.GameData.Name}"
+        : includeWorld ? $"{Service.ClientState.LocalPlayer.Name}@{Service.ClientState.LocalPlayer.HomeWorld.GameData!.Name}"
         : Service.ClientState.LocalPlayer.Name.ToString();
 
     /// <inheritdoc/>
@@ -520,6 +521,8 @@ public class CommandInterface : ICommandInterface
     public bool IsPlayerCasting() => Service.ClientState.LocalPlayer!.IsCasting;
 
     public unsafe uint GetGil() => InventoryManager.Instance()->GetGil();
+
+    public uint GetClassJobId() => Svc.ClientState.LocalPlayer!.ClassJob.Id;
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
