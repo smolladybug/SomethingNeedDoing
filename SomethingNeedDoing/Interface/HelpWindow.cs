@@ -317,6 +317,10 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+           "2023-11-20",
+           "- Macros will now automatically prefix non-command text lines with /echo. To send a message to chat now requires you to prefix it with the appropiate chat channel command.\n");
+
+        DisplayChangelog(
            "2023-11-17",
            "- Added /hold\n" +
            "- Added /release.\n" +
