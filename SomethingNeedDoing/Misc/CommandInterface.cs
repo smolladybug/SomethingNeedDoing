@@ -152,6 +152,20 @@ public class CommandInterface : ICommandInterface
     }
 
     /// <inheritdoc/>
+    public int GetGp()
+    {
+        var gp = Service.ClientState.LocalPlayer?.CurrentGp ?? 0;
+        return (int)gp;
+    }
+
+    /// <inheritdoc/>
+    public int GetMaxGp()
+    {
+        var gp = Service.ClientState.LocalPlayer?.MaxGp ?? 0;
+        return (int)gp;
+    }
+
+    /// <inheritdoc/>
     public unsafe int GetStep()
     {
         var addon = this.GetSynthesisAddon();
