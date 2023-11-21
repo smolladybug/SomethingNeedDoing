@@ -520,6 +520,8 @@ public class CommandInterface : ICommandInterface
 
     public bool IsPlayerCasting() => Service.ClientState.LocalPlayer!.IsCasting;
 
+    public unsafe bool IsMoving() => new Structs()._playerController->MoveControllerWalk.MovementState == 1;
+
     public unsafe uint GetGil() => InventoryManager.Instance()->GetGil();
 
     public uint GetClassJobId() => Svc.ClientState.LocalPlayer!.ClassJob.Id;

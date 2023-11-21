@@ -141,9 +141,9 @@ internal class HelpWindow : Window
             new[] { "wait" },
             new[]
             {
-                "/send MULTIPLY",
-                "/send NUMPAD0",
-                "/send CONTROL+MENU+SHIFT+NUMPAD0",
+                "/hold MULTIPLY",
+                "/hold NUMPAD0",
+                "/hold CONTROL+MENU+SHIFT+NUMPAD0",
             }),
         (
             "release", null,
@@ -151,9 +151,9 @@ internal class HelpWindow : Window
             new[] { "wait" },
             new[]
             {
-                "/send MULTIPLY",
-                "/send NUMPAD0",
-                "/send CONTROL+MENU+SHIFT+NUMPAD0",
+                "/release MULTIPLY",
+                "/release NUMPAD0",
+                "/release CONTROL+MENU+SHIFT+NUMPAD0",
             }),
         (
             "target", null,
@@ -315,6 +315,10 @@ internal class HelpWindow : Window
         }
 
         ImGui.PushFont(UiBuilder.MonoFont);
+
+        DisplayChangelog(
+           "2023-11-21",
+           "- Added IsMoving()\n");
 
         DisplayChangelog(
            "2023-11-20",
@@ -908,6 +912,7 @@ void LeaveDuty()
 bool IsLocalPlayerNull()
 bool IsPlayerDead()
 bool IsPlayerCasting()
+bool IsMoving()
 
 uint GetGil()
 
