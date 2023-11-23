@@ -317,6 +317,10 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
+           "2023-11-23",
+           "- Fix for IsMoving() to detect forms of automated movement.\n");
+
+        DisplayChangelog(
            "2023-11-21",
            "- Added IsMoving()\n");
 
