@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 using Dalamud.Game.ClientState.Conditions;
@@ -525,6 +526,12 @@ public class CommandInterface : ICommandInterface
     public unsafe uint GetGil() => InventoryManager.Instance()->GetGil();
 
     public uint GetClassJobId() => Svc.ClientState.LocalPlayer!.ClassJob.Id;
+
+    public float GetPlayerRawXPos() => Svc.ClientState.LocalPlayer!.Position.X;
+    public float GetPlayerRawYPos() => Svc.ClientState.LocalPlayer!.Position.Y;
+    public float GetPlayerRawZPos() => Svc.ClientState.LocalPlayer!.Position.Z;
+
+    public float GetDistanceToPoint(float x, float y, float z) => Vector3.Distance(Svc.ClientState.LocalPlayer!.Position, new Vector3(x, y, z));
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {

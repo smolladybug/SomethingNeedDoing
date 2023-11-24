@@ -315,6 +315,12 @@ internal class HelpWindow : Window
         }
 
         ImGui.PushFont(UiBuilder.MonoFont);
+        DisplayChangelog(
+           "2023-11-23",
+           "- Added GetPlayerRawXPos()\n" +
+           "- Added GetPlayerRawZPos()\n" +
+           "- Added GetPlayerRawYPos()\n" +
+           "- Added GetDistanceToPoint()\n");
 
         DisplayChangelog(
            "2023-11-23",
@@ -921,6 +927,11 @@ bool IsMoving()
 uint GetGil()
 
 uint GetClassJobId()
+
+float GetPlayerRawXPos()
+float GetPlayerRawYPos()
+float GetPlayerRawZPos()
+float GetDistanceToPoint(float x, float y, float z))
 ".Trim();
 
         ImGui.TextWrapped(text);
