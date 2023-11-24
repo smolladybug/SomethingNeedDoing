@@ -520,12 +520,7 @@ public class CommandInterface : ICommandInterface
 
     public bool IsPlayerCasting() => Service.ClientState.LocalPlayer!.IsCasting;
 
-    public unsafe bool IsMoving()
-    {
-        // some types of automated movement do not trigger the movement state
-        var walkController = new Structs()._playerController->MoveControllerWalk;
-        return walkController.MovementState == 1 || walkController.MovementFwd != 0 || walkController.MovementLeft != 0;
-    }
+    public unsafe bool IsMoving() => AgentMap.Instance()->IsPlayerMoving == 1;
 
     public unsafe uint GetGil() => InventoryManager.Instance()->GetGil();
 
