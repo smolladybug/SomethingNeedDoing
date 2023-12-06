@@ -12,7 +12,11 @@ using Dalamud.Interface;
 using Dalamud.Interface.Colors;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
+using ECommons;
+using ECommons.DalamudServices;
 using ImGuiNET;
+using Lumina.Excel;
+using Lumina.Excel.GeneratedSheets;
 
 namespace SomethingNeedDoing.Interface;
 
@@ -268,7 +272,7 @@ internal class HelpWindow : Window
     {
         if (ImGui.BeginTabBar("HelpTab"))
         {
-            var tabs = new (string Title, Action Dele)[]
+            var tabs = new (string Title, System.Action Dele)[]
             {
                 ("Changelog", this.DrawChangelog),
                 ("Options", this.DrawOptions),
@@ -279,6 +283,7 @@ internal class HelpWindow : Window
                 ("Clicks", this.DrawClicks),
                 ("Sends", this.DrawVirtualKeys),
                 ("Conditions", this.DrawAllConditions),
+                ("Game Data", this.DrawGameData),
             };
 
             foreach (var (title, dele) in tabs)
@@ -315,6 +320,12 @@ internal class HelpWindow : Window
         }
 
         ImGui.PushFont(UiBuilder.MonoFont);
+
+        DisplayChangelog(
+           "2023-11-23",
+           "- Added GetLevel()\n" +
+           "- Added \"Game Data\" tab to the help menu.");
+
         DisplayChangelog(
            "2023-11-23",
            "- Added GetPlayerRawXPos()\n" +
@@ -932,6 +943,8 @@ float GetPlayerRawXPos()
 float GetPlayerRawYPos()
 float GetPlayerRawZPos()
 float GetDistanceToPoint(float x, float y, float z))
+
+int GetLevel(uint ExpArrayIndex = -1)
 ".Trim();
 
         ImGui.TextWrapped(text);
@@ -1006,5 +1019,22 @@ float GetDistanceToPoint(float x, float y, float z))
             if (isActive)
                 ImGui.PopStyleColor();
         }
+    }
+
+    private readonly IEnumerable<ClassJob> classJobSheet = Svc.Data.GetExcelSheet<ClassJob>(Svc.ClientState.ClientLanguage)!.Where(x => !x.Name.RawString.IsNullOrEmpty());
+    private void DrawGameData()
+    {
+        using var font = ImRaii.PushFont(UiBuilder.MonoFont);
+
+        ImGui.TextWrapped("Misc Game Data Information");
+        ImGui.Separator();
+
+        ImGui.TextWrapped("ClassJob");
+        ImGui.PushStyleColor(ImGuiCol.Text, ShadedColor);
+        foreach (var cj in classJobSheet)
+        {
+            ImGui.Text($"{cj.Name}: Key={cj.RowId}; ExpArrayIndex={cj.ExpArrayIndex}");
+        }
+        ImGui.PopStyleColor();
     }
 }

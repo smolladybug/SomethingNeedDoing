@@ -464,7 +464,7 @@ public class CommandInterface : ICommandInterface
     public unsafe bool DeliverooIsTurnInRunning()
     {
         DeliverooIPC.Init();
-        return DeliverooIPC.IsTurnInRunning.InvokeFunc();
+        return DeliverooIPC.IsTurnInRunning!.InvokeFunc();
     }
 
     /// <inheritdoc/>
@@ -532,6 +532,12 @@ public class CommandInterface : ICommandInterface
     public float GetPlayerRawZPos() => Svc.ClientState.LocalPlayer!.Position.Z;
 
     public float GetDistanceToPoint(float x, float y, float z) => Vector3.Distance(Svc.ClientState.LocalPlayer!.Position, new Vector3(x, y, z));
+
+    public unsafe int GetLevel(int expArrayIndex = -1)
+    {
+        if (expArrayIndex == -1) expArrayIndex = Svc.ClientState.LocalPlayer!.ClassJob.GameData!.ExpArrayIndex;
+        return UIState.Instance()->PlayerState.ClassJobLevelArray[expArrayIndex];
+    }
 
     private unsafe int GetNodeTextAsInt(AtkTextNode* node, string error)
     {
