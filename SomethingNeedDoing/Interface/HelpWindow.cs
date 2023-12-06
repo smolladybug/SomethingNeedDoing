@@ -324,8 +324,9 @@ internal class HelpWindow : Window
         DisplayChangelog(
            "2023-06-23",
            "- Added GetLevel()\n" +
-           "- Added \"Game Data\" tab to the help menu." +
-           "- Added GetGp() and GetMaxGp() (thanks nihilistzsche)");
+           "- Added \"Game Data\" tab to the help menu.\n" +
+           "- Added GetGp() and GetMaxGp() (thanks nihilistzsche)\n" +
+           "- Added GetFCRank()\n");
 
         DisplayChangelog(
            "2023-11-23",
