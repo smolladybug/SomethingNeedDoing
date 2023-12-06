@@ -322,9 +322,10 @@ internal class HelpWindow : Window
         ImGui.PushFont(UiBuilder.MonoFont);
 
         DisplayChangelog(
-           "2023-11-23",
+           "2023-06-23",
            "- Added GetLevel()\n" +
-           "- Added \"Game Data\" tab to the help menu.");
+           "- Added \"Game Data\" tab to the help menu." +
+           "- Added GetGp() and GetMaxGp() (thanks nihilistzsche)");
 
         DisplayChangelog(
            "2023-11-23",
