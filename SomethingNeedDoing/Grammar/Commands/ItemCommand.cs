@@ -85,8 +85,8 @@ internal class ItemCommand : MacroCommand
             itemID += 1_000_000;
 
         var result = agent->UseItem(itemID);
-        if (result != 0)
-            throw new MacroCommandError("Failed to use item");
+        //if (result != 0)
+        //    throw new MacroCommandError("Failed to use item");
     }
 
     private unsafe int GetInventoryItemCount(uint itemID, bool isHQ)
