@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Logging;
 using ECommons.DalamudServices;
+using ECommons.MathHelpers;
 using FFXIVClientStructs.FFXIV.Client.Game;
 using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using FFXIVClientStructs.FFXIV.Client.Graphics.Kernel;
@@ -24,11 +25,97 @@ namespace SomethingNeedDoing.Misc;
 /// <summary>
 /// Miscellaneous functions that commands/scripts can use.
 /// </summary>
-public class CommandInterface : ICommandInterface
+public unsafe class CommandInterface : ICommandInterface
 {
     private readonly AbandonDuty abandonDuty = Marshal.GetDelegateForFunctionPointer<AbandonDuty>(Service.SigScanner.ScanText("E8 ?? ?? ?? ?? 48 8B 43 28 B1 01"));
 
     private delegate void AbandonDuty(bool a1);
+
+    private readonly byte* trueWeather = (byte*)(*(IntPtr*)Service.SigScanner.GetStaticAddressFromSig("48 8B 05 ?? ?? ?? ?? 48 83 C1 10 48 89 74 24") + 0x26);
+
+    /// <inheritdoc/>
+    public unsafe int GetWeatherId()
+    {
+        return (int)*this.trueWeather;
+    }
+
+    /// <inheritdoc/>
+    public unsafe string GetPlayerPosition()
+    {
+        var pos = Service.ClientState.LocalPlayer?.Position ?? new(0, 0, 0);
+        return string.Format("{0,3} {1,3} {2,3}", pos.X, pos.Y, pos.Z);
+    }
+
+    /// <inheritdoc/>
+    public uint GetDiademCharges()
+    {
+        var addon = (AtkUnitBase*)Svc.GameGui.GetAddonByName("HWDAetherGauge");
+        if (addon == null || !addon->IsVisible) return 0;
+
+        uint fullCharges = 0;
+        uint[] gauges = { 3, 4, 5, 6, 7 };
+
+        foreach (var gaugeIndex in gauges)
+        {
+            var gaugeNode = addon->UldManager.NodeList[gaugeIndex];
+            if (gaugeNode == null) continue;
+
+            var chargeNode = gaugeNode->GetAsAtkComponentNode()->Component->UldManager.NodeList[3];
+            if (chargeNode == null) continue;
+
+            if (chargeNode->Width == gaugeNode->Width)
+            {
+                fullCharges++;
+            }
+        }
+
+        return fullCharges;
+
+    }
+
+    /// <inheritdoc/>
+    public string GetTargetName()
+    {
+        var target = Service.TargetManager.Target;
+        if (target != null)
+        {
+            return target.Name.ToString();
+        }
+        return string.Empty;
+    }
+
+    /// <inheritdoc/>
+    public string GetTargetId()
+    {
+        var target = Service.TargetManager.Target;
+        if (target != null)
+        {
+            if (target.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.BattleNpc)
+            {
+                return target.DataId.ToString();
+            }
+            return target.Position.ToVector2().ToString();
+        }
+        return "";
+    }
+
+    /// <inheritdoc/>
+    public string GetClosestGatheringNodeId()
+    {
+        var target = Service.ObjectTable
+            .OrderBy(o => Vector3.Distance(o.Position, Service.ClientState.LocalPlayer!.Position))
+            .Where(o => o.IsTargetable && o.ObjectKind == Dalamud.Game.ClientState.Objects.Enums.ObjectKind.GatheringPoint)
+            .First();
+
+        if (target == null)
+        {
+            return "false";
+        }
+        else
+        {
+            return target.Position.ToVector2().ToString();
+        }
+    }
 
     /// <summary>
     /// Gets the static instance.

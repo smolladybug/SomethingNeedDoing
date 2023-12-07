@@ -1,10 +1,55 @@
-﻿namespace SomethingNeedDoing.Misc;
+﻿using ECommons.DalamudServices;
+using ECommons.MathHelpers;
+using FFXIVClientStructs.FFXIV.Component.GUI;
+using System.Linq;
+
+namespace SomethingNeedDoing.Misc;
 
 /// <summary>
 /// Miscellaneous functions that commands/scripts can use.
 /// </summary>
 public interface ICommandInterface
 {
+    /// <summary>
+    /// Get the ID of the current weather
+    /// </summary>
+    /// <returns>ID of current active weather</returns>
+    public unsafe int GetWeatherId();
+
+    /// <summary>
+    /// Get the true coordinates of the player
+    /// </summary>
+    /// <returns>coordinates of player delimited by space</returns>
+    public unsafe string GetPlayerPosition()
+    {
+        var pos = Service.ClientState.LocalPlayer?.Position ?? new(0, 0, 0);
+        return string.Format("{0,3} {1,3} {2,3}", pos.X, pos.Y, pos.Z);
+    }
+
+    /// <summary>
+    /// Get the number of fully charged diadem shots
+    /// </summary>
+    /// <returns>Number of diadem shots or 0 if not in diadem</returns>
+    public uint GetDiademCharges();
+
+    /// <summary>
+    /// Get the display name of the current target
+    /// </summary>
+    /// <returns>Name of target or an empty string if there is none</returns>
+    public string GetTargetName();
+
+    /// <summary>
+    /// Gets the ID of the currenttarget
+    /// </summary>
+    /// <returns>DataID of target or an empty string if there is none</returns>
+    public string GetTargetId();
+
+    /// <summary>
+    /// Gets the ID of the closest visible Gathering node.
+    /// </summary>
+    /// <returns>ID of gathering node or an empty string if there is none</returns>
+    public string GetClosestGatheringNodeId();
+
     /// <summary>
     /// Get a value indicating whether the player is crafting.
     /// </summary>
